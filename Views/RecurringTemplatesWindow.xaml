@@ -1,0 +1,128 @@
+﻿<Window x:Class="FinanceManager.Views.RecurringTemplatesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="📋 Modelos de Despesas Recorrentes" Height="500" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Header -->
+		<Border Grid.Row="0" Background="#3498DB" Padding="20,15">
+			<StackPanel>
+				<TextBlock Text="📋 Modelos Pré-definidos"
+                           FontSize="22" FontWeight="Bold"
+                           Foreground="White" HorizontalAlignment="Center"/>
+				<TextBlock Text="Escolha um modelo para começar rapidamente"
+                           FontSize="14" Foreground="LightCyan"
+                           HorizontalAlignment="Center"/>
+			</StackPanel>
+		</Border>
+
+		<!-- Lista de Modelos -->
+		<ScrollViewer Grid.Row="1" Padding="20">
+			<StackPanel>
+				<TextBlock Text="💡 Escolha um dos modelos abaixo:"
+                           FontSize="14" FontWeight="Bold"
+                           Margin="0,0,0,20"/>
+
+				<ListBox x:Name="TemplatesListBox"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Border Background="White"
+                                    BorderBrush="#E0E0E0"
+                                    BorderThickness="1"
+                                    Padding="15"
+                                    Margin="0,0,0,10">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40"/>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="Auto"/>
+									</Grid.ColumnDefinitions>
+
+									<!-- Ícone -->
+									<Border Grid.Column="0"
+                                            Background="#3498DB"
+                                            CornerRadius="20"
+                                            Width="30" Height="30"
+                                            VerticalAlignment="Center">
+										<TextBlock Text="💰"
+                                                   FontSize="16"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+									</Border>
+
+									<!-- Informações -->
+									<StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Center">
+										<TextBlock Text="{Binding Name}"
+                                                   FontSize="14" FontWeight="Bold"/>
+										<TextBlock Text="{Binding Description}"
+                                                   FontSize="11"
+                                                   Foreground="Gray"
+                                                   TextWrapping="Wrap"/>
+										<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+											<TextBlock Text="{Binding Category}"
+                                                       FontSize="10" FontWeight="Bold"/>
+											<TextBlock Text=" • " FontSize="10" Margin="5,0,0,0"/>
+											<TextBlock Text="{Binding Frequency}"
+                                                       FontSize="10" FontWeight="Bold"/>
+										</StackPanel>
+									</StackPanel>
+
+									<!-- Valor -->
+									<TextBlock Grid.Column="2"
+                                               Text="{Binding FormattedAmount}"
+                                               FontSize="16" FontWeight="Bold"
+                                               Foreground="#27AE60"
+                                               VerticalAlignment="Center"
+                                               Margin="15,0"/>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</ScrollViewer>
+
+		<!-- Botões -->
+		<Border Grid.Row="2" Background="#ECF0F1" BorderBrush="#DDD"
+                BorderThickness="0,1,0,0" Padding="20,15">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Column="0"
+                           Text="💡 Dica: Duplo-clique num modelo para o usar"
+                           FontSize="11"
+                           VerticalAlignment="Center"/>
+
+				<Button Grid.Column="1"
+                        Content="❌ Cancelar"
+                        Click="Cancel_Click"
+                        Background="#95A5A6"
+                        Foreground="White"
+                        Padding="20,10"
+                        Margin="0,0,15,0"/>
+
+				<Button Grid.Column="2"
+                        Content="✅ Usar Modelo"
+                        Click="Select_Click"
+                        Background="#27AE60"
+                        Foreground="White"
+                        Padding="20,10"/>
+			</Grid>
+		</Border>
+	</Grid>
+</Window>

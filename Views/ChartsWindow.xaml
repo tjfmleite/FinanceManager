@@ -1,0 +1,122 @@
+<Window x:Class="FinanceManager.Views.ChartsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Gráficos e Relatórios" 
+        Height="700" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- DropShadow Effect -->
+        <DropShadowEffect x:Key="CardShadow" 
+                         Color="Black" 
+                         Direction="270" 
+                         ShadowDepth="2" 
+                         Opacity="0.2" 
+                         BlurRadius="8"/>
+    </Window.Resources>
+
+    <Grid Background="#FFF5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" Padding="20" Margin="10,10,10,5"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <TextBlock Text="📈 Análise Financeira" FontSize="20" FontWeight="SemiBold"/>
+                <ComboBox HorizontalAlignment="Right" Width="150" SelectedIndex="0">
+                    <ComboBoxItem Content="Últimos 30 dias"/>
+                    <ComboBoxItem Content="Últimos 3 meses"/>
+                    <ComboBoxItem Content="Últimos 6 meses"/>
+                    <ComboBoxItem Content="Este ano"/>
+                </ComboBox>
+            </Grid>
+        </Border>
+
+        <!-- Charts Container -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="10">
+
+                <!-- Gráfico de Linha - Evolução Mensal -->
+                <Border Background="White" Padding="20" Margin="0,5" CornerRadius="5"
+                       Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <TextBlock Text="Evolução Mensal das Despesas" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <lvc:CartesianChart x:Name="MonthlyChart" Height="250">
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Meses"/>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Valor (€)" LabelFormatter="{Binding CurrencyFormatter}"/>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </StackPanel>
+                </Border>
+
+                <!-- Gráficos lado a lado -->
+                <Grid Margin="0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Gráfico Circular - Categorias -->
+                    <Border Grid.Column="0" Background="White" Padding="20" Margin="0,0,5,0" CornerRadius="5"
+                           Effect="{StaticResource CardShadow}">
+                        <StackPanel>
+                            <TextBlock Text="Despesas por Categoria" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                            <lvc:PieChart x:Name="CategoryPieChart" Height="300" InnerRadius="40">
+                                <!-- As séries serão definidas programaticamente no code-behind -->
+                            </lvc:PieChart>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Gráfico de Barras - Receitas vs Despesas -->
+                    <Border Grid.Column="1" Background="White" Padding="20" Margin="5,0,0,0" CornerRadius="5"
+                           Effect="{StaticResource CardShadow}">
+                        <StackPanel>
+                            <TextBlock Text="Receitas vs Despesas" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                            <lvc:CartesianChart x:Name="IncomeVsExpensesChart" Height="300">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Meses"/>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Valor (€)" LabelFormatter="{Binding CurrencyFormatter}"/>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Análise Textual -->
+                <Border Background="White" Padding="20" Margin="0,5" CornerRadius="5"
+                       Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Análise dos Dados" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock x:Name="AnalysisTextBlock" 
+                                  TextWrapping="Wrap" 
+                                  LineHeight="22"
+                                  Foreground="#FF666666"
+                                  Text="Carregando análise..."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Loading Indicator (oculto por padrão) -->
+                <Border x:Name="LoadingPanel" Background="White" Padding="40" Margin="0,5" CornerRadius="5"
+                       Effect="{StaticResource CardShadow}" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center">
+                        <ProgressBar IsIndeterminate="True" Height="6" Width="200" Margin="0,0,0,15"/>
+                        <TextBlock Text="📈 Processando dados financeiros..." 
+                                  HorizontalAlignment="Center" 
+                                  FontSize="14" 
+                                  Foreground="#FF666666"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

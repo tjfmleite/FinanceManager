@@ -1,0 +1,185 @@
+﻿<Window x:Class="FinanceManager.Views.SavingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="🎯 Objetivos de Poupança" Height="700" Width="1200"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Lista de Objetivos (Esquerda) -->
+        <GroupBox Grid.Column="0" Header="📊 Seus Objetivos de Poupança" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Lista -->
+                <ListView x:Name="SavingsListView" Grid.Row="0" 
+                          MouseDoubleClick="SavingsListView_MouseDoubleClick">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="🎯 Nome" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="💶 Meta" Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FormattedTargetAmount}" 
+                                                   HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="💰 Atual" Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FormattedCurrentAmount}" 
+                                                   HorizontalAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="📈 Progresso" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <ProgressBar Value="{Binding ProgressPercentage, Mode=OneWay}" 
+                                                         Maximum="100" Height="15" 
+                                                         Background="LightGray"
+                                                         Foreground="{Binding ProgressBarColor}"/>
+                                            <TextBlock Text="{Binding FormattedProgressPercentage}" 
+                                                       HorizontalAlignment="Center" FontSize="10"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="📅 Prazo" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FormattedEndDate}" 
+                                                   HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Status" Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding StatusText}" 
+                                                   HorizontalAlignment="Center" FontSize="10"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Ações" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="📊" Width="30" Height="25" Margin="2"
+                                                    ToolTip="Atualizar Progresso"
+                                                    Click="UpdateProgress_Click"/>
+                                            <Button Content="🗑️" Width="30" Height="25" Margin="2"
+                                                    ToolTip="Eliminar Objetivo"
+                                                    Click="DeleteTarget_Click"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <!-- Botões de Ação -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                    <Button Content="🔄 Atualizar" Click="Refresh_Click" Margin="5" Padding="10,5"/>
+                    <Button Content="📊 Estatísticas" Click="ShowStats_Click" Margin="5" Padding="10,5"/>
+                    <Button Content="✅ Marcar Concluído" Click="CompleteTarget_Click" Margin="5" Padding="10,5"/>
+                </StackPanel>
+
+                <!-- Status Message -->
+                <TextBlock x:Name="StatusMessage" Grid.Row="2" 
+                           HorizontalAlignment="Center" Margin="0,5"
+                           FontStyle="Italic" FontSize="12"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Separador -->
+        <Rectangle Grid.Column="1" Fill="LightGray" Width="1"/>
+
+        <!-- Formulário de Criação (Direita) -->
+        <GroupBox Grid.Column="2" Header="➕ Criar Novo Objetivo" Margin="10,0,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10">
+
+                    <!-- Nome do Objetivo -->
+                    <Label Content="🎯 Nome do Objetivo:" FontWeight="SemiBold"/>
+                    <TextBox x:Name="NameTextBox" Height="25" Margin="0,0,0,10"
+                             ToolTip="Ex: Férias de Verão, Carro Novo, Casa..."/>
+
+                    <!-- Valor Objetivo -->
+                    <Label Content="💶 Valor Objetivo (€):" FontWeight="SemiBold"/>
+                    <TextBox x:Name="TargetAmountTextBox" Height="25" Margin="0,0,0,10"
+                             ToolTip="Ex: 5000,00"/>
+
+                    <!-- Valor Inicial -->
+                    <Label Content="💰 Valor Inicial (€):" FontWeight="SemiBold"/>
+                    <TextBox x:Name="CurrentAmountTextBox" Height="25" Margin="0,0,0,10"
+                             Text="0,00" ToolTip="Quanto já tem poupado (opcional)"/>
+
+                    <!-- Data Limite -->
+                    <Label Content="📅 Data Limite (opcional):" FontWeight="SemiBold"/>
+                    <DatePicker x:Name="EndDatePicker" Height="25" Margin="0,0,0,10"
+                                ToolTip="Quando pretende atingir o objetivo"/>
+
+                    <!-- Descrição -->
+                    <Label Content="📝 Descrição (opcional):" FontWeight="SemiBold"/>
+                    <TextBox x:Name="DescriptionTextBox" Height="60" Margin="0,0,0,20"
+                             TextWrapping="Wrap" AcceptsReturn="True"
+                             ToolTip="Detalhes sobre o objetivo..."/>
+
+                    <!-- Botões -->
+                    <StackPanel>
+                        <Button x:Name="CreateTargetButton" Content="🎯 Criar Objetivo" 
+                                Height="35" Margin="0,0,0,10"
+                                Background="Green" Foreground="White" FontWeight="SemiBold"
+                                Click="CreateTarget_Click"/>
+
+                        <Button Content="🧹 Limpar Formulário" Height="30"
+                                Click="ClearForm_Click"/>
+                    </StackPanel>
+
+                    <!-- Informações de Ajuda -->
+                    <Border Background="LightBlue" CornerRadius="5" Padding="10" Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock FontWeight="SemiBold" Text="💡 Dicas:"/>
+                            <TextBlock TextWrapping="Wrap" FontSize="11" Margin="0,5,0,0">
+                                • Defina objetivos específicos e realistas
+                                <LineBreak/>
+                                • Duplo-clique num objetivo para atualizar
+                                <LineBreak/>
+                                • Use F2 para editar rapidamente
+                                <LineBreak/>
+                                • Pressione F1 para mais ajuda
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</Window>

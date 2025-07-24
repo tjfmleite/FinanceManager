@@ -1,0 +1,147 @@
+﻿<Window x:Class="FinanceManager.Views.NotesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Notas e Tarefas"
+        Height="600" Width="800"
+        WindowStartupLocation="CenterOwner">
+
+	<Grid Background="#FFF5F5F5">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="250"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Lista de Notas -->
+		<Border Grid.Column="0" Background="White" Margin="10,10,5,10">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Header -->
+				<Border Grid.Row="0" Background="#FF263238" Padding="15">
+					<Grid>
+						<TextBlock Text="📝 Minhas Notas"
+                                  Foreground="White"
+                                  FontWeight="SemiBold"/>
+						<Button Content="+"
+                               HorizontalAlignment="Right"
+                               Click="NewNote_Click"
+                               Background="#FF4CAF50"
+                               Foreground="White"
+                               BorderThickness="0"
+                               Width="25"
+                               Height="25"
+                               Cursor="Hand"/>
+					</Grid>
+				</Border>
+
+				<!-- Lista -->
+				<ListBox Grid.Row="1"
+                        x:Name="NotesListBox"
+                        SelectionChanged="NotesListBox_SelectionChanged"
+                        BorderThickness="0">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="5">
+								<TextBlock Text="{Binding Title}"
+                                          FontWeight="SemiBold"
+                                          TextTrimming="CharacterEllipsis"/>
+								<TextBlock Text="{Binding CreatedDate, StringFormat=dd/MM/yyyy}"
+                                          FontSize="10"
+                                          Foreground="Gray"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Grid>
+		</Border>
+
+		<!-- Editor de Notas -->
+		<Border Grid.Column="1" Background="White" Margin="5,10,10,10">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<!-- Título -->
+				<TextBox Grid.Row="0"
+                        x:Name="TitleTextBox"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Margin="20,20,20,10"
+                        Background="Transparent"
+                        IsEnabled="False"/>
+
+				<!-- Tags -->
+				<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,20,10">
+					<TextBlock Text="Tags:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBox x:Name="TagsTextBox"
+                            Width="200"
+                            Height="25"
+                            IsEnabled="False"/>
+				</StackPanel>
+
+				<!-- Toolbar -->
+				<StackPanel Grid.Row="2"
+                           Orientation="Horizontal"
+                           Margin="20,0,20,10">
+					<Button Content="• Lista"
+                           Click="AddBulletPoint_Click"
+                           Background="#FF2196F3"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Padding="10,5"
+                           Margin="0,0,5,0"
+                           Cursor="Hand"/>
+				</StackPanel>
+
+				<!-- Conteúdo -->
+				<ScrollViewer Grid.Row="3" Margin="20,0,20,10">
+					<TextBox x:Name="ContentTextBox"
+                            AcceptsReturn="True"
+                            AcceptsTab="True"
+                            TextWrapping="Wrap"
+                            VerticalScrollBarVisibility="Auto"
+                            BorderThickness="1"
+                            Padding="10"
+                            IsEnabled="False"
+                            FontFamily="Consolas"
+                            FontSize="12"/>
+				</ScrollViewer>
+
+				<!-- Botões -->
+				<StackPanel Grid.Row="4"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Right"
+                           Margin="20">
+					<Button x:Name="SaveButton"
+                           Content="💾 Guardar"
+                           Click="SaveNote_Click"
+                           Background="#FF4CAF50"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Padding="15,5"
+                           Margin="0,0,10,0"
+                           Cursor="Hand"
+                           IsEnabled="False"/>
+					<Button x:Name="DeleteButton"
+                           Content="🗑️ Eliminar"
+                           Click="DeleteNote_Click"
+                           Background="#FFFF5722"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Padding="15,5"
+                           Cursor="Hand"
+                           IsEnabled="False"/>
+				</StackPanel>
+			</Grid>
+		</Border>
+	</Grid>
+</Window>

@@ -1,0 +1,193 @@
+﻿<Window x:Class="FinanceManager.Views.LiveQuoteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="📊 Cotação em Tempo Real"
+        Width="600" Height="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="#F8F9FA">
+
+	<Window.Resources>
+		<Style x:Key="HeaderText" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Margin" Value="0,0,0,10"/>
+		</Style>
+
+		<Style x:Key="LabelText" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Foreground" Value="#6C757D"/>
+			<Setter Property="Margin" Value="0,5,0,2"/>
+		</Style>
+
+		<Style x:Key="ValueText" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Margin" Value="0,0,0,8"/>
+		</Style>
+
+		<Style x:Key="PriceText" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Margin" Value="0,5"/>
+		</Style>
+
+		<Style x:Key="ModernButton" TargetType="Button">
+			<Setter Property="Height" Value="35"/>
+			<Setter Property="Padding" Value="15,8"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Margin" Value="5"/>
+		</Style>
+	</Window.Resources>
+
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Cabeçalho -->
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+			<TextBlock Text="📊" FontSize="28" VerticalAlignment="Center" Margin="0,0,10,0"/>
+			<StackPanel>
+				<TextBlock x:Name="SymbolText" Text="LOADING..."
+                           FontSize="20" FontWeight="Bold" Foreground="#007ACC"/>
+				<TextBlock x:Name="CompanyNameText" Text="Carregando informações..."
+                           FontSize="14" Foreground="#6C757D"/>
+			</StackPanel>
+		</StackPanel>
+
+		<!-- Conteúdo Principal -->
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="20"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Coluna Esquerda - Preço Principal -->
+				<StackPanel Grid.Column="0">
+					<TextBlock Text="💰 Cotação Atual" Style="{StaticResource HeaderText}" Foreground="#007ACC"/>
+
+					<Border Background="White" BorderBrush="#DDD" BorderThickness="1"
+                            Padding="20" CornerRadius="8" Margin="0,0,0,20">
+						<StackPanel>
+							<TextBlock Text="Preço Atual:" Style="{StaticResource LabelText}"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock x:Name="CurrentPriceText" Text="$0.00"
+                                           Style="{StaticResource PriceText}" Foreground="#007ACC"/>
+								<TextBlock x:Name="CurrencyText" Text="USD"
+                                           FontSize="14" VerticalAlignment="Bottom"
+                                           Margin="8,0,0,8" Foreground="#6C757D"/>
+							</StackPanel>
+
+							<TextBlock Text="Variação:" Style="{StaticResource LabelText}"/>
+							<StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+								<TextBlock x:Name="ChangeText" Text="+$0.00"
+                                           Style="{StaticResource ValueText}" Foreground="Green"/>
+								<TextBlock x:Name="ChangePercentText" Text="(+0.00%)"
+                                           Style="{StaticResource ValueText}" Foreground="Green" Margin="10,0,0,0"/>
+							</StackPanel>
+
+							<TextBlock Text="Fecho Anterior:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="PreviousCloseText" Text="$0.00" Style="{StaticResource ValueText}"/>
+
+							<TextBlock Text="Estado do Mercado:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="MarketStateText" Text="🟢 ABERTO"
+                                       Style="{StaticResource ValueText}" Foreground="Green"/>
+						</StackPanel>
+					</Border>
+
+					<!-- Conversão EUR -->
+					<Border Background="#E8F4FD" BorderBrush="#007ACC" BorderThickness="1"
+                            Padding="15" CornerRadius="8">
+						<StackPanel>
+							<TextBlock Text="💶 Conversão EUR" FontWeight="Bold"
+                                       FontSize="14" Foreground="#007ACC" Margin="0,0,0,10"/>
+
+							<TextBlock Text="Preço em EUR:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="PriceEurText" Text="€0,00"
+                                       FontSize="18" FontWeight="Bold" Foreground="#007ACC"/>
+
+							<TextBlock Text="Variação em EUR:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="ChangeEurText" Text="+€0,00"
+                                       FontSize="14" FontWeight="SemiBold" Foreground="Green"/>
+						</StackPanel>
+					</Border>
+				</StackPanel>
+
+				<!-- Coluna Direita - Informações Adicionais -->
+				<StackPanel Grid.Column="2">
+					<TextBlock Text="📈 Informações" Style="{StaticResource HeaderText}" Foreground="#007ACC"/>
+
+					<Border Background="White" BorderBrush="#DDD" BorderThickness="1"
+                            Padding="20" CornerRadius="8" Margin="0,0,0,20">
+						<StackPanel>
+							<TextBlock Text="Moeda Original:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="CurrencyDetailText" Text="USD" Style="{StaticResource ValueText}"/>
+
+							<TextBlock Text="Última Atualização:" Style="{StaticResource LabelText}"/>
+							<TextBlock x:Name="LastUpdateText" Text="00:00:00" Style="{StaticResource ValueText}"/>
+
+							<Separator Margin="0,15"/>
+
+							<TextBlock Text="⚡ Controles" FontWeight="Bold" FontSize="14"
+                                       Foreground="#007ACC" Margin="0,0,0,10"/>
+
+							<Button x:Name="RefreshButton" Content="🔄 Atualizar Agora"
+                                    Background="#007ACC" Foreground="White"
+                                    Style="{StaticResource ModernButton}"
+                                    Click="Refresh_Click"/>
+
+							<Button x:Name="AutoRefreshToggle" Content="⏸️ Pausar Auto"
+                                    Background="#FF9800" Foreground="White"
+                                    Style="{StaticResource ModernButton}"
+                                    Click="AutoRefreshToggle_Click"/>
+						</StackPanel>
+					</Border>
+
+					<!-- Dicas -->
+					<Border Background="#FFF3CD" BorderBrush="#FFC107" BorderThickness="1"
+                            Padding="15" CornerRadius="8">
+						<StackPanel>
+							<TextBlock Text="💡 Dicas" FontWeight="Bold"
+                                       FontSize="14" Foreground="#856404" Margin="0,0,0,8"/>
+							<TextBlock Text="• F5: Atualizar manualmente"
+                                       FontSize="12" Foreground="#856404"/>
+							<TextBlock Text="• ESPAÇO: Pausar/retomar automático"
+                                       FontSize="12" Foreground="#856404"/>
+							<TextBlock Text="• ESC: Fechar janela"
+                                       FontSize="12" Foreground="#856404"/>
+							<TextBlock Text="• Atualizações a cada 30 segundos"
+                                       FontSize="12" Foreground="#856404"/>
+						</StackPanel>
+					</Border>
+				</StackPanel>
+			</Grid>
+		</ScrollViewer>
+
+		<!-- Status -->
+		<Border Grid.Row="2" Background="#F8F9FA" BorderBrush="#DDD" BorderThickness="0,1,0,0"
+                Padding="0,10,0,0" Margin="0,15,0,0">
+			<TextBlock x:Name="StatusText"
+                       Text="🔄 Carregando cotação..."
+                       FontSize="12" Foreground="#6C757D"/>
+		</Border>
+
+		<!-- Botões -->
+		<StackPanel Grid.Row="3" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,15,0,0">
+			<Button Content="❌ Fechar"
+                    Background="#6C757D" Foreground="White"
+                    Style="{StaticResource ModernButton}"
+                    Click="Close_Click"/>
+		</StackPanel>
+	</Grid>
+</Window>

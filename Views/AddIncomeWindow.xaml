@@ -1,0 +1,231 @@
+﻿<Window x:Class="FinanceManager.Views.AddIncomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Adicionar Receita"
+        Height="580" Width="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F8F9FA">
+
+	<Window.Resources>
+		<!-- Estilos modernos -->
+		<Style x:Key="ModernTextBox" TargetType="TextBox">
+			<Setter Property="Padding" Value="12,10"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="BorderBrush" Value="#DDD"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="Foreground" Value="#333"/>
+			<Style.Triggers>
+				<Trigger Property="IsFocused" Value="True">
+					<Setter Property="BorderBrush" Value="#4CAF50"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<Style x:Key="ModernComboBox" TargetType="ComboBox">
+			<Setter Property="Padding" Value="12,10"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="BorderBrush" Value="#DDD"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="Foreground" Value="#333"/>
+		</Style>
+
+		<Style x:Key="ModernDatePicker" TargetType="DatePicker">
+			<Setter Property="Padding" Value="12,10"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="BorderBrush" Value="#DDD"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="Foreground" Value="#333"/>
+		</Style>
+
+		<Style x:Key="PrimaryButton" TargetType="Button">
+			<Setter Property="Background" Value="#4CAF50"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontSize" Value="16"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Padding" Value="20,12"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}" CornerRadius="6">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#45A049"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="SecondaryButton" TargetType="Button">
+			<Setter Property="Background" Value="#6C757D"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Padding" Value="20,10"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}" CornerRadius="6">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#5A6268"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+
+	<Grid Margin="30">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Header -->
+		<StackPanel Grid.Row="0" Margin="0,0,0,30">
+			<TextBlock Text="💰 Adicionar Receita"
+                      FontSize="24"
+                      FontWeight="Bold"
+                      Foreground="#2E7D32"
+                      HorizontalAlignment="Center"/>
+			<TextBlock Text="Registre suas receitas e ganhos"
+                      FontSize="14"
+                      Foreground="#666"
+                      HorizontalAlignment="Center"
+                      Margin="0,5,0,0"/>
+		</StackPanel>
+
+		<!-- Formulário -->
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+
+				<!-- Descrição -->
+				<StackPanel Margin="0,0,0,20">
+					<TextBlock Text="📝 Descrição *"
+                              FontWeight="SemiBold"
+                              Foreground="#333"
+                              Margin="0,0,0,8"/>
+					<TextBox x:Name="DescriptionTextBox"
+                            Style="{StaticResource ModernTextBox}"
+                            MaxLength="200"
+                            Height="40"/>
+					<TextBlock Text="Ex: Salário, Freelance, Vendas, etc."
+                              FontSize="12"
+                              Foreground="#888"
+                              Margin="0,5,0,0"/>
+				</StackPanel>
+
+				<!-- Valor -->
+				<StackPanel Margin="0,0,0,20">
+					<TextBlock Text="💶 Valor (€) *"
+                              FontWeight="SemiBold"
+                              Foreground="#333"
+                              Margin="0,0,0,8"/>
+					<TextBox x:Name="AmountTextBox"
+                            Style="{StaticResource ModernTextBox}"
+                            Height="40"/>
+					<TextBlock Text="Use vírgula para decimais. Ex: 1250,50"
+                              FontSize="12"
+                              Foreground="#888"
+                              Margin="0,5,0,0"/>
+				</StackPanel>
+
+				<!-- Categoria -->
+				<StackPanel Margin="0,0,0,20">
+					<TextBlock Text="🏷️ Categoria *"
+                              FontWeight="SemiBold"
+                              Foreground="#333"
+                              Margin="0,0,0,8"/>
+					<ComboBox x:Name="CategoryComboBox"
+                             Style="{StaticResource ModernComboBox}"
+                             Height="40"
+                             IsEditable="True">
+						<ComboBoxItem Content="Salário"/>
+						<ComboBoxItem Content="Freelance"/>
+						<ComboBoxItem Content="Vendas"/>
+						<ComboBoxItem Content="Investimentos"/>
+						<ComboBoxItem Content="Prêmios"/>
+						<ComboBoxItem Content="Aluguéis"/>
+						<ComboBoxItem Content="Dividendos"/>
+						<ComboBoxItem Content="Subsídios"/>
+						<ComboBoxItem Content="Negócios"/>
+						<ComboBoxItem Content="Outros"/>
+					</ComboBox>
+				</StackPanel>
+
+				<!-- Data -->
+				<StackPanel Margin="0,0,0,20">
+					<TextBlock Text="📅 Data *"
+                              FontWeight="SemiBold"
+                              Foreground="#333"
+                              Margin="0,0,0,8"/>
+					<DatePicker x:Name="DatePicker"
+                               Style="{StaticResource ModernDatePicker}"
+                               Height="40"
+                               SelectedDate="{x:Static sys:DateTime.Today}"
+                               xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+				</StackPanel>
+
+				<!-- Notas (Opcional) -->
+				<StackPanel Margin="0,0,0,20">
+					<TextBlock Text="📄 Notas (Opcional)"
+                              FontWeight="SemiBold"
+                              Foreground="#333"
+                              Margin="0,0,0,8"/>
+					<TextBox x:Name="NotesTextBox"
+                            Style="{StaticResource ModernTextBox}"
+                            Height="80"
+                            TextWrapping="Wrap"
+                            VerticalScrollBarVisibility="Auto"
+                            AcceptsReturn="True"
+                            MaxLength="500"/>
+					<TextBlock Text="Informações adicionais sobre esta receita"
+                              FontSize="12"
+                              Foreground="#888"
+                              Margin="0,5,0,0"/>
+				</StackPanel>
+
+			</StackPanel>
+		</ScrollViewer>
+
+		<!-- Botões -->
+		<StackPanel Grid.Row="2"
+                   Orientation="Horizontal"
+                   HorizontalAlignment="Right"
+                   Margin="0,20,0,0">
+			<Button Content="Cancelar"
+                   Style="{StaticResource SecondaryButton}"
+                   Click="Cancel_Click"
+                   Margin="0,0,15,0"
+                   MinWidth="100"/>
+			<Button Content="💾 Adicionar"
+                   Style="{StaticResource PrimaryButton}"
+                   Click="Add_Click"
+                   MinWidth="120"/>
+		</StackPanel>
+
+		<!-- Mensagem de Status -->
+		<TextBlock x:Name="StatusMessage"
+                  Grid.Row="2"
+                  FontSize="12"
+                  Margin="0,5,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Bottom"/>
+	</Grid>
+</Window>

@@ -1,0 +1,182 @@
+﻿<Window x:Class="FinanceManager.Views.AddRecurringExpenseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Adicionar Despesa Recorrente"
+        Width="600" Height="700"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#F8F9FA">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="PrimaryButton">
+            <Setter Property="Background" Value="#007BFF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0056B3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SecondaryButton">
+            <Setter Property="Background" Value="#6C757D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#545B62"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,30">
+            <TextBlock Text="💰" FontSize="32" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <StackPanel>
+                <TextBlock Text="Nova Despesa Recorrente" 
+                          FontSize="24" FontWeight="Bold" 
+                          Foreground="#333"/>
+                <TextBlock Text="Configure uma despesa que se repete automaticamente" 
+                          FontSize="14" 
+                          Foreground="#666" Margin="0,5,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Formulário -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Descrição -->
+                <Label Content="📝 Descrição *" Target="{Binding ElementName=DescriptionTextBox}"/>
+                <TextBox x:Name="DescriptionTextBox" 
+                        ToolTip="Descreva a despesa recorrente (ex: Renda da casa)"
+                        TabIndex="1"/>
+
+                <!-- Valor -->
+                <Label Content="💶 Valor *" Target="{Binding ElementName=AmountTextBox}" Margin="0,15,0,0"/>
+                <TextBox x:Name="AmountTextBox" 
+                        ToolTip="Insira o valor da despesa (ex: 450,00)"
+                        TabIndex="2"/>
+
+                <!-- Categoria -->
+                <Label Content="🏷️ Categoria *" Target="{Binding ElementName=CategoryComboBox}" Margin="0,15,0,0"/>
+                <ComboBox x:Name="CategoryComboBox" TabIndex="3">
+                    <ComboBoxItem Content="🏠 Habitação"/>
+                    <ComboBoxItem Content="🚗 Transportes"/>
+                    <ComboBoxItem Content="🍽️ Alimentação"/>
+                    <ComboBoxItem Content="💡 Utilidades"/>
+                    <ComboBoxItem Content="📱 Telecomunicações"/>
+                    <ComboBoxItem Content="🎓 Educação"/>
+                    <ComboBoxItem Content="🏥 Saúde"/>
+                    <ComboBoxItem Content="🎯 Entretenimento"/>
+                    <ComboBoxItem Content="👕 Vestuário"/>
+                    <ComboBoxItem Content="💳 Seguros"/>
+                    <ComboBoxItem Content="🔧 Manutenção"/>
+                    <ComboBoxItem Content="📊 Subscriptions"/>
+                    <ComboBoxItem Content="🎯 Outros"/>
+                </ComboBox>
+
+                <!-- Frequência -->
+                <Label Content="🔄 Frequência *" Target="{Binding ElementName=FrequencyComboBox}" Margin="0,15,0,0"/>
+                <ComboBox x:Name="FrequencyComboBox" TabIndex="4">
+                    <ComboBoxItem Content="📅 Diária" Tag="Daily"/>
+                    <ComboBoxItem Content="📅 Semanal" Tag="Weekly"/>
+                    <ComboBoxItem Content="📅 Mensal" Tag="Monthly" IsSelected="True"/>
+                    <ComboBoxItem Content="📅 Trimestral" Tag="Quarterly"/>
+                    <ComboBoxItem Content="📅 Anual" Tag="Yearly"/>
+                </ComboBox>
+
+                <!-- Data de início -->
+                <Label Content="📅 Data de Início *" Target="{Binding ElementName=StartDatePicker}" Margin="0,15,0,0"/>
+                <DatePicker x:Name="StartDatePicker" TabIndex="5"/>
+
+                <!-- Data de fim (opcional) -->
+                <Label Content="📅 Data de Fim (Opcional)" Target="{Binding ElementName=EndDatePicker}" Margin="0,15,0,0"/>
+                <DatePicker x:Name="EndDatePicker" TabIndex="6"/>
+                <TextBlock Text="💡 Deixe em branco se a despesa não tem data de fim" 
+                          FontSize="12" Foreground="#666" Margin="0,5,0,0"/>
+
+                <!-- Notas -->
+                <Label Content="📝 Notas (Opcional)" Target="{Binding ElementName=NotesTextBox}" Margin="0,15,0,0"/>
+                <TextBox x:Name="NotesTextBox" 
+                        Height="80" 
+                        TextWrapping="Wrap" 
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Auto"
+                        ToolTip="Adicione notas ou observações sobre esta despesa"
+                        TabIndex="7"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Mensagem de Status -->
+        <TextBlock x:Name="StatusMessage" 
+                  Grid.Row="2" 
+                  FontSize="14" 
+                  FontWeight="SemiBold" 
+                  HorizontalAlignment="Center" 
+                  Margin="0,20,0,10"/>
+
+        <!-- Botões -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="❌ Cancelar" 
+                   Style="{StaticResource SecondaryButton}"
+                   Click="Cancel_Click" 
+                   Margin="0,0,15,0"
+                   TabIndex="9"/>
+            <Button Content="✅ Adicionar Despesa Recorrente" 
+                   Style="{StaticResource PrimaryButton}"
+                   Click="Add_Click"
+                   TabIndex="8"/>
+        </StackPanel>
+    </Grid>
+</Window>

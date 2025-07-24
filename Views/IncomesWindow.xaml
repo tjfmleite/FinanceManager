@@ -1,0 +1,277 @@
+﻿<Window x:Class="FinanceManager.Views.IncomesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="💰 Gestão de Receitas" 
+        Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- DropShadow Effect -->
+        <DropShadowEffect x:Key="CardShadow" 
+                         Color="Black" 
+                         Direction="270" 
+                         ShadowDepth="2" 
+                         Opacity="0.2" 
+                         BlurRadius="8"/>
+
+        <!-- Button Styles -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="5"
+                               Effect="{StaticResource CardShadow}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF45A049"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF3D8B40"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#FF2196F3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="5"
+                               Effect="{StaticResource CardShadow}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF1976D2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#FFF5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" Padding="20" Margin="10,10,10,5"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="💰 Gestão de Receitas" FontSize="20" FontWeight="SemiBold"/>
+                    <TextBlock Text="Visualize e gerencie todas as suas receitas" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="➕ Adicionar Receita"
+                           Style="{StaticResource PrimaryButton}"
+                           Width="150"
+                           Click="AddIncome_Click"/>
+                    <Button Content="✏️ Editar"
+                           Style="{StaticResource SecondaryButton}"
+                           Width="80"
+                           Click="EditIncome_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Data Grid -->
+        <Border Grid.Row="1" Background="White" Margin="10,5" CornerRadius="5"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <DataGrid x:Name="IncomesDataGrid"
+                         AutoGenerateColumns="False"
+                         CanUserAddRows="False"
+                         CanUserDeleteRows="False"
+                         SelectionMode="Single"
+                         GridLinesVisibility="Horizontal"
+                         HeadersVisibility="Column"
+                         AlternatingRowBackground="#FFF9F9F9"
+                         Margin="10">
+
+                    <DataGrid.Columns>
+                        <!-- Data -->
+                        <DataGridTextColumn Header="📅 Data" 
+                                          Binding="{Binding Date, StringFormat=dd/MM/yyyy}" 
+                                          Width="100"
+                                          IsReadOnly="True"/>
+
+                        <!-- Descrição -->
+                        <DataGridTextColumn Header="📝 Descrição" 
+                                          Binding="{Binding Description}" 
+                                          Width="*"
+                                          IsReadOnly="True"/>
+
+                        <!-- Categoria -->
+                        <DataGridTextColumn Header="🏷️ Categoria" 
+                                          Binding="{Binding Category}" 
+                                          Width="120"
+                                          IsReadOnly="True"/>
+
+                        <!-- Valor -->
+                        <DataGridTextColumn Header="💰 Valor" 
+                                          Binding="{Binding Amount, StringFormat=C}" 
+                                          Width="100"
+                                          IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="Foreground" Value="#FF4CAF50"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Notas -->
+                        <DataGridTextColumn Header="📋 Notas" 
+                                          Binding="{Binding Notes}" 
+                                          Width="150"
+                                          IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- ID (oculto) -->
+                        <DataGridTextColumn Header="ID" 
+                                          Binding="{Binding Id}" 
+                                          Visibility="Collapsed"/>
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Height" Value="35"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FFE8F5E8"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FFD4EFDF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                </DataGrid>
+
+                <!-- Empty State -->
+                <StackPanel x:Name="EmptyStatePanel" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Visibility="Collapsed">
+                    <TextBlock Text="💰" FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                    <TextBlock Text="Nenhuma receita encontrada" 
+                              FontSize="16" 
+                              FontWeight="SemiBold" 
+                              HorizontalAlignment="Center"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Text="Adicione a sua primeira receita para começar" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Footer Statistics -->
+        <Border Grid.Row="2" Background="White" Padding="20" Margin="10,5,10,10"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Total de Receitas -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="📊 Total de Receitas" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TotalCountText" 
+                              Text="0" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center"
+                              Foreground="#FF4CAF50"/>
+                </StackPanel>
+
+                <!-- Valor Total -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="💰 Valor Total" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TotalAmountText" 
+                              Text="€0,00" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center"
+                              Foreground="#FF4CAF50"/>
+                </StackPanel>
+
+                <!-- Média Mensal -->
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="📈 Média Mensal" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="MonthlyAverageText" 
+                              Text="€0,00" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center"
+                              Foreground="#FF2196F3"/>
+                </StackPanel>
+
+                <!-- Este Mês -->
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                    <TextBlock Text="🗓️ Este Mês" 
+                              FontSize="12" 
+                              Foreground="#FF666666" 
+                              HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ThisMonthText" 
+                              Text="€0,00" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center"
+                              Foreground="#FFFF9800"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

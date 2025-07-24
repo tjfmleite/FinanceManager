@@ -1,0 +1,187 @@
+﻿<Window x:Class="FinanceManager.Views.UpdateSavingsProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="📊 Atualizar Progresso de Poupança" 
+        Height="600" 
+        Width="520"
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanResize"
+        MinHeight="550"
+        MinWidth="480">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0" Background="#2E5BBA" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="📊 Atualizar Progresso de Poupança" 
+                               FontSize="18" 
+                               FontWeight="Bold" 
+                               Foreground="White" 
+                               HorizontalAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Informações do Objetivo -->
+            <GroupBox Grid.Row="1" Header="🎯 Informações do Objetivo" Margin="0,0,0,15" Padding="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="📝 Nome:" FontWeight="SemiBold" Margin="5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TargetNameText" Text="Objetivo" Margin="5" 
+                               TextWrapping="Wrap" VerticalAlignment="Center" FontSize="14"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="🎯 Meta:" FontWeight="SemiBold" Margin="5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TargetAmountText" Text="€ 0,00" Margin="5" 
+                               VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" Foreground="DarkBlue"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="💰 Valor Atual:" FontWeight="SemiBold" Margin="5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="CurrentAmountText" Text="€ 0,00" Margin="5" 
+                               VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" Foreground="Green"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="📊 Progresso:" FontWeight="SemiBold" Margin="5" VerticalAlignment="Top"/>
+                    <StackPanel Grid.Row="3" Grid.Column="1" Margin="5">
+                        <ProgressBar x:Name="ProgressBar" Height="25" Maximum="100" 
+                                     Background="LightGray" Foreground="#4CAF50" BorderThickness="1"/>
+                        <TextBlock x:Name="ProgressText" Text="0%" HorizontalAlignment="Center" 
+                                   FontSize="12" Margin="0,3,0,0" FontWeight="SemiBold"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="💼 Falta:" FontWeight="SemiBold" Margin="5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="RemainingAmountText" Text="€ 0,00" 
+                               Foreground="Red" Margin="5" VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Separador Visual -->
+            <Separator Grid.Row="2" Margin="0,10" Background="#CCCCCC" Height="2"/>
+
+            <!-- Formulário de Atualização -->
+            <GroupBox Grid.Row="3" Header="💰 Atualizar Valor" Margin="0,15,0,15" Padding="15">
+                <StackPanel>
+                    <Label Content="💶 Valor a Adicionar/Remover (€):" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox x:Name="AmountToAddTextBox" 
+                             Height="35" 
+                             FontSize="16" 
+                             Padding="10"
+                             HorizontalContentAlignment="Right"
+                             PreviewTextInput="AmountToAddTextBox_PreviewTextInput"
+                             ToolTip="Use valores positivos para adicionar, negativos para remover"
+                             BorderThickness="2"
+                             BorderBrush="LightBlue"/>
+
+                    <TextBlock Text="💡 Dica: Use valores negativos para remover (ex: -50,00)" 
+                               FontStyle="Italic" 
+                               FontSize="11" 
+                               Foreground="Gray" 
+                               Margin="0,8,0,15"
+                               TextWrapping="Wrap"/>
+
+                    <Label Content="📝 Notas (opcional):" FontWeight="SemiBold" Margin="0,10,0,5"/>
+                    <TextBox x:Name="NotesTextBox" 
+                             Height="80" 
+                             TextWrapping="Wrap" 
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Padding="8"
+                             ToolTip="Adicione uma nota sobre esta atualização..."
+                             BorderThickness="2"
+                             BorderBrush="LightBlue"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Informações Adicionais -->
+            <GroupBox Grid.Row="4" Header="📈 Informações Adicionais" Margin="0,0,0,15" Padding="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                        <TextBlock Text="📅 Data de Início:" FontWeight="SemiBold" FontSize="11" Foreground="Gray"/>
+                        <TextBlock x:Name="StartDateText" Text="01/01/2024" FontSize="12"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <TextBlock Text="⏰ Data Limite:" FontWeight="SemiBold" FontSize="11" Foreground="Gray"/>
+                        <TextBlock x:Name="EndDateText" Text="Sem limite" FontSize="12"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
+                        <TextBlock Text="📊 Velocidade Média:" FontWeight="SemiBold" FontSize="11" Foreground="Gray"/>
+                        <TextBlock x:Name="AverageSpeedText" Text="€0,00/dia" FontSize="12"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+                        <TextBlock Text="🎯 Previsão:" FontWeight="SemiBold" FontSize="11" Foreground="Gray"/>
+                        <TextBlock x:Name="EstimatedDateText" Text="Indeterminado" FontSize="12"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <!-- Espaço flexível -->
+            <Grid Grid.Row="5"/>
+
+            <!-- Espaçamento adicional -->
+            <Grid Grid.Row="6" Height="20"/>
+
+            <!-- Botões -->
+            <Border Grid.Row="7" Background="#F5F5F5" CornerRadius="8" Padding="15">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="CancelButton" 
+                            Content="❌ Cancelar" 
+                            Width="120" 
+                            Height="40" 
+                            Margin="10,0"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Background="#E0E0E0"
+                            BorderThickness="1"
+                            BorderBrush="#CCCCCC"
+                            Click="Cancel_Click"/>
+
+                    <Button x:Name="SaveButton" 
+                            Content="💾 Guardar" 
+                            Width="120" 
+                            Height="40" 
+                            Margin="10,0"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            IsDefault="True"
+                            Background="#4CAF50"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Click="Save_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,6 @@
+# Ignore build results
+bin/
+obj/
+*.user
+*.suo
+.vs/

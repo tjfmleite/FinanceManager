@@ -1,0 +1,268 @@
+﻿<Window x:Class="FinanceManager.Views.EditExpenseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="✏️ Editar Despesa"
+        Height="520" Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F8F9FA">
+
+    <Window.Resources>
+        <!-- Usar os mesmos estilos do AddExpenseWindow -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,10,0,20"/>
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#E74C3C"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#E74C3C"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#E74C3C"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="UpdateButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#A93226"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E67E22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D35400"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#BA4A00"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CancelButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#A1B3B4"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#7F8C8D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="✏️ Editar Despesa" Style="{StaticResource HeaderTextStyle}"/>
+            <TextBlock Text="Modifique os dados da despesa selecionada" 
+                      FontSize="14" 
+                      Foreground="#7F8C8D" 
+                      HorizontalAlignment="Center" 
+                      Margin="0,0,0,20"/>
+        </StackPanel>
+
+        <!-- Form -->
+        <StackPanel Grid.Row="1" Margin="0,10">
+            <!-- Descrição -->
+            <Label Content="📝 Descrição" Style="{StaticResource LabelStyle}"/>
+            <TextBox x:Name="DescriptionTextBox" 
+                    Style="{StaticResource TextBoxStyle}"
+                    KeyDown="DescriptionTextBox_KeyDown"
+                    TabIndex="1"
+                    ToolTip="Descreva a despesa (ex: Supermercado, Combustível)"/>
+
+            <!-- Valor -->
+            <Label Content="💶 Valor (€)" Style="{StaticResource LabelStyle}"/>
+            <TextBox x:Name="AmountTextBox" 
+                    Style="{StaticResource TextBoxStyle}"
+                    KeyDown="AmountTextBox_KeyDown"
+                    TabIndex="2"
+                    ToolTip="Valor da despesa em euros (ex: 25,50)"/>
+
+            <!-- Categoria -->
+            <Label Content="🏷️ Categoria" Style="{StaticResource LabelStyle}"/>
+            <ComboBox x:Name="CategoryComboBox" 
+                     Style="{StaticResource ComboBoxStyle}"
+                     KeyDown="CategoryComboBox_KeyDown"
+                     TabIndex="3"
+                     ToolTip="Selecione a categoria da despesa">
+                <ComboBoxItem Content="🍽️ Alimentação"/>
+                <ComboBoxItem Content="🚗 Transporte"/>
+                <ComboBoxItem Content="🏠 Casa"/>
+                <ComboBoxItem Content="🏥 Saúde"/>
+                <ComboBoxItem Content="🎬 Entretenimento"/>
+                <ComboBoxItem Content="🛍️ Compras"/>
+                <ComboBoxItem Content="📚 Educação"/>
+                <ComboBoxItem Content="📦 Outros"/>
+            </ComboBox>
+
+            <!-- Data -->
+            <Label Content="📅 Data" Style="{StaticResource LabelStyle}"/>
+            <DatePicker x:Name="DatePicker" 
+                       Style="{StaticResource DatePickerStyle}"
+                       KeyDown="DatePicker_KeyDown"
+                       TabIndex="4"
+                       ToolTip="Data em que a despesa foi realizada"
+                       DisplayDateStart="2020-01-01"
+                       DisplayDateEnd="{x:Static sys:DateTime.Now}"
+                       xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+
+            <!-- Info da despesa -->
+            <Border Background="#ECF0F1" 
+                   CornerRadius="5" 
+                   Padding="10" 
+                   Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock x:Name="ExpenseInfoText" 
+                              Text="Carregando informações da despesa..." 
+                              FontSize="12" 
+                              Foreground="#7F8C8D" 
+                              TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" 
+                   Orientation="Horizontal" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,20,0,0">
+            <Button x:Name="UpdateButton" 
+                   Content="✏️ Atualizar" 
+                   Style="{StaticResource UpdateButtonStyle}"
+                   Click="Update_Click"
+                   TabIndex="5"
+                   IsDefault="True"/>
+            <Button x:Name="DeleteButton" 
+                   Content="🗑️ Eliminar" 
+                   Style="{StaticResource DeleteButtonStyle}"
+                   Click="Delete_Click"
+                   TabIndex="6"/>
+            <Button x:Name="CancelButton" 
+                   Content="❌ Cancelar" 
+                   Style="{StaticResource CancelButtonStyle}"
+                   Click="Cancel_Click"
+                   TabIndex="7"
+                   IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
